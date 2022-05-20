@@ -2,11 +2,16 @@ const Discord = require("discord.js")
 const { MIN_INCREMENT, INITIAL_TIMER, IDLE_TIMER, MAX_BID } = require('../modules/config');
 
 function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue) {
+
+    // if the user has an admin role, allow the bid always
+    if (bidInteraction.member.roles.cache.has(bidInteraction.client.config.ADMIN_ROLE_ID)) return true;
+
     if (bidValue > MAX_BID) {
         bidInteraction.reply({
             content: `You're only allowed to bid up to a maximum of ${MAX_BID} in an auction! Bid ${MAX_BID} exactly in case you want to buy the player instantly.`,
             ephemeral: true,
         });
+    
         return false;
     }
 
@@ -18,9 +23,10 @@ function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue) {
         return false;
     }
 
-    if (teamMembers.length < 3 && bidValue > balance * 0.75) {
+    // check if we theoretically have enough money to fill at least to 3 teamMembers
+    if (bidValue + (teamMembers.length * MIN_INCREMENT) > balance) {
         bidInteraction.reply({
-            content: `You cannot bid more than 75% of your remaining money (${balance * 0.75}) until you have at least 3 players!`,
+            content: `You are about to bet more than you theoretically need to fill the remaining team slots (3-6 players)! (${balance})`,
             ephemeral: true,
         });
         return false;
