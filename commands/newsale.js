@@ -1,10 +1,10 @@
 const Discord = require("discord.js")
-const { MIN_INCREMENT, INITIAL_TIMER, IDLE_TIMER, MAX_BID } = require('../modules/config');
+const { MIN_INCREMENT, INITIAL_TIMER, IDLE_TIMER, MAX_BID, ADMIN_ROLE_ID } = require('../modules/config');
 
 function checkBid(bidValue, bidInteraction, balance, teamMembers, saleValue) {
 
     // if the user has an admin role, allow the bid always
-    if (bidInteraction.member.roles.cache.has(bidInteraction.client.config.ADMIN_ROLE_ID)) return true;
+    if (bidInteraction.member.roles.cache.has(ADMIN_ROLE_ID)) return true;
 
     if (bidValue > MAX_BID) {
         bidInteraction.reply({
