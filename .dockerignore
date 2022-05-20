@@ -4,6 +4,8 @@ players.tsv
 .env*
 !.env.example
 
+auctionbot.json
+
 # Logs
 logs
 *.log
