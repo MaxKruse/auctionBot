@@ -1,10 +1,12 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
 
 function parseIntOrThrow(str) {
     const i = parseInt(str);
     if (isNaN(i)) throw new Error(`${str} is not a number`);
     return i;
 }
+
+dotenv.config();
 
 module.exports = {
     TOKEN: process.env.TOKEN,
@@ -15,4 +17,6 @@ module.exports = {
     IDLE_TIMER: parseIntOrThrow(process.env.IDLE_TIMER),
     MAX_BID: parseIntOrThrow(process.env.MAX_BID),
     MIN_INCREMENT: parseIntOrThrow(process.env.MIN_INCREMENT),
+    SPREADSHEET_ID: process.env.SPREADSHEET_ID,
+    SHEET_NAME: process.env.SHEET_NAME,
 }
